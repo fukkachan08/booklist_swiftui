@@ -7,7 +7,7 @@ class BooksAPIClient: ObservableObject {
     func fetchBooks(queryString: String) {
         Task { @MainActor in
             self.books = await apiClient.fetchData(
-                from: "https://www.gopogleapis.com/books/v1/volumes?\(queryString)",
+                from: "https://www.googleapis.com/books/v1/volumes?\(queryString)",
                 responseType: BookResponse.self
             )
         }

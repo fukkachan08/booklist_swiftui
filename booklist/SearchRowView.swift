@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SearchRowView: View {
+    @State var isSaved: Bool = false
     let imageUrl: String?
     let title: String?
     let publisher: String?
@@ -24,7 +25,17 @@ struct SearchRowView: View {
                     Text(publisher ?? "")
                         .font(.caption)
                 }
-                .frame(minHeight: 100)
+                Spacer()
+                
+                Button(action: {
+                    guard !isSaved else { return }
+                    let newBook = BookSummary(id: UUID().uuidString, title: title ?? "", thumbnail: imageUrl)
+                    SwiftDataManager().saveItem(data: newBook)
+                    isSaved = true
+                }, label: {
+                    Image(systemName: isSaved ? "checkmark.circle.fill" : "plus.circle")
+                })
+                .buttonStyle(PlainButtonStyle())
             }
         }
     }
